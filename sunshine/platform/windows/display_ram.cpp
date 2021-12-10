@@ -268,6 +268,9 @@ capture_e display_ram_t::snapshot(::platf::img_t *img_base, std::chrono::millise
     return capture_e::timeout;
   }
 
+  // release frame early to avoid mouse-induced stutter
+  dup.release_frame();
+
   std::copy_n((std::uint8_t *)img_info.pData, height * img_info.RowPitch, (std::uint8_t *)img->data);
 
   if(cursor_visible && cursor.visible) {

@@ -687,6 +687,10 @@ capture_e display_vram_t::snapshot(platf::img_t *img_base, std::chrono::millisec
   }
 
   device_ctx->CopyResource(img->texture.get(), src.get());
+
+  // release frame early to avoid mouse-induced stutter
+  dup.release_frame();
+
   if(cursor.visible) {
     D3D11_VIEWPORT view {
       0.0f, 0.0f,
